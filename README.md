@@ -13,20 +13,78 @@ This is a work-in-progress set of [Draft](http://draft.sh) packs tailored to Win
 
 ## Setting up Draft
 
+First, you need to finish setting up Draft, and getting the Windows Draft packs used to build & deploy Windows code.
 
 ```powershell
-$ENV:KUBECONFIG=(gci .\kubeconfig.json).FullName
-
 draft init
 draft pack-repo add https://github.com/PatrickLang/WindowsDraftPacks
+```
 
-# get sources from ...
+## Configure Draft for your Kubernetes cluster and container registry
 
+
+```powershell
+# Set KUBECONFIG for your cluster
+$ENV:KUBECONFIG=(gci .\kubeconfig.json).FullName
+
+# Change this to your username
+# run docker login first
+draft config set registry docker.io/patricklang
+```
+
+
+> TODO: Finish logging into Azure Container Register
+
+
+## Building a sample project
+
+```
+cd \repos
+git clone https://github.com/dotnet/dotnet-docker.git
+cd dotnet-docker\samples\aspnetapp\aspnetapp
+draft create -p CSharpWindowsNetCore
+draft up
 ```
 
 
 
-## Running an app
+This will automatically build the code, push it to the container registry, and deploy it to the cluster
 
-This is based off the Windows sample in [dotnet/dotnet-docker](https://github.com/dotnet/dotnet-docker/tree/master/samples/aspnetapp/aspnetapp), [Dockerfile.nanoserver](https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/aspnetapp/Dockerfile.nanoserver-sac2016)
+```
+Draft Up Started: 'aspnetapp': 01CXYFNZHDP4ZT0F646FZ9FFKZ
+aspnetapp: Building Docker Image: SUCCESS ⚓  (1.0010s)
+aspnetapp: Pushing Docker Image: SUCCESS ⚓  (2.3559s)
+aspnetapp: Releasing Application: SUCCESS ⚓  (42.7079s)
+Inspect the logs with `draft logs 01CXYFNZHDP4ZT0F646FZ9FFKZ`
+```
 
+Since it's a Helm chart, you can also check the state with Helm
+
+```
+ helm list
+NAME            REVISION        UPDATED                         STATUS          CHART                   APP VERSION     NAMESPACE
+aspnetapp       1               Wed Dec  5 06:08:06 2018        DEPLOYED        aspnetapp-v0.0.1                        default
+PS C:\temp\aspnetapp> helm status aspnetapp
+LAST DEPLOYED: Wed Dec  5 06:08:06 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Service
+NAME                 AGE
+aspnetapp-aspnetapp  6m
+
+==> v1/Deployment
+aspnetapp-aspnetapp  6m
+
+==> v1/Pod(related)
+
+NAME                                 READY  STATUS   RESTARTS  AGE
+aspnetapp-aspnetapp-7b9449988-bfxt2  1/1    Running  0         6m
+
+
+NOTES:
+
+  http://aspnetapp. to access your application
+
+```
