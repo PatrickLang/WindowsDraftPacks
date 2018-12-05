@@ -1,4 +1,4 @@
-name: csharp
-description: A Helm chart for Kubernetes
+name: csharpWindowsNetCore
+description: A Helm chart for Kubernetes for C# apps targeting .Net Core on Windows Server 2019
 apiVersion: v1
-version: v0.1.0
+version: v0.0.1

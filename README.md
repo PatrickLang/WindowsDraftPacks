@@ -11,6 +11,8 @@ This is a work-in-progress set of [Draft](http://draft.sh) packs tailored to Win
 - [Helm](http://helm.sh) v2.11.0+ - `choco install kubernetes-helm`
 
 
+## Setting up Draft
+
 
 ```powershell
 $ENV:KUBECONFIG=(gci .\kubeconfig.json).FullName
@@ -19,3 +21,10 @@ draft init
 draft pack-repo add 
 
 ```
+
+
+
+## Running an app
+
+This is based off the Windows sample in [dotnet/dotnet-docker](https://github.com/dotnet/dotnet-docker/tree/master/samples/aspnetapp/aspnetapp), [Dockerfile.nanoserver](https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/aspnetapp/Dockerfile.nanoserver-sac2016)
+
