@@ -18,7 +18,7 @@ This is a work-in-progress set of [Draft](http://draft.sh) packs tailored to Win
 $ENV:KUBECONFIG=(gci .\kubeconfig.json).FullName
 
 draft init
-draft pack-repo add github.com/PatrickLang/WindowsDraftPacks
+draft pack-repo add https://github.com/PatrickLang/WindowsDraftPacks
 
 # get sources from ...
 
