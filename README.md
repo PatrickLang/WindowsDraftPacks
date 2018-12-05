@@ -36,7 +36,7 @@ draft config set registry docker.io/patricklang
 > TODO: Finish logging into Azure Container Register
 
 
-## Building a sample project
+## Building a sample project with .Net Core
 
 ```
 cd \repos
@@ -88,3 +88,7 @@ NOTES:
   http://aspnetapp. to access your application
 
 ```
+
+## Building a Sample App with .Net Framework 4.7.2
+
+> TODO
