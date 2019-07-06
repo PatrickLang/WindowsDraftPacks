@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk-nanoserver-1809 AS builder
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-nanoserver-1809 AS builder
 WORKDIR /app
 
 # caches restore result by copying csproj file separately
@@ -12,7 +12,7 @@ RUN dotnet publish --output /app/ --configuration Release
 RUN if not exist "__assemblyname" ( for %i in (*.csproj) do ( echo %~ni.dll ) > __assemblyname )
 
 # Stage 2
-FROM microsoft/dotnet:2.2-aspnetcore-runtime-nanoserver-1809
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-nanoserver-1809
 WORKDIR /app
 COPY --from=builder /app .
 
